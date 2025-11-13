@@ -20,7 +20,6 @@ export function LoginPage({ onLogin, onSignupClick }: LoginPageProps) {
   const [userid, setUserid] = useState("");      // ← 변경됨 (email → userid)
   const [password, setPassword] = useState("");  // ← pw와 연결됨
   const [remember, setRemember] = useState(false);
-
   const [errorMessage, setErrorMessage] = useState("");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +36,7 @@ export function LoginPage({ onLogin, onSignupClick }: LoginPageProps) {
       });
 
       if (response.ok || response.status === 302) {
-        onLogin(); // React 내부 로그인 처리
+        onLogin();
       } else {
         setErrorMessage("아이디 또는 비밀번호가 올바르지 않습니다."); // 🔥 HTML과 동일
       }
@@ -74,14 +73,13 @@ export function LoginPage({ onLogin, onSignupClick }: LoginPageProps) {
 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-
+            {errorMessage && (
+              <div className="text-red-600 text-sm mb-2">
+                {errorMessage}
+              </div>
+            )}
               {/* 아이디 */}
               <div className="space-y-2">
-                {errorMessage && (
-  <div className="text-red-600 text-sm mb-2">
-    {errorMessage}
-  </div>
-)}
                 <Label htmlFor="userid" className="text-gray-700">
                   아이디
                 </Label>
@@ -124,6 +122,7 @@ export function LoginPage({ onLogin, onSignupClick }: LoginPageProps) {
                 <Label htmlFor="remember-me" className="text-gray-700 text-sm">
                   로그인 유지
                 </Label>
+                
               </div>
 
               {/* 로그인 버튼 */}
@@ -143,6 +142,11 @@ export function LoginPage({ onLogin, onSignupClick }: LoginPageProps) {
               >
                 데모 계정으로 체험하기
               </Button>
+               <div className="text-center mt-2 text-sm text-gray-600">
+  <a href="/find-id" className="text-purple-600 hover:underline">아이디 찾기</a>
+  <span className="mx-1 text-gray-400">|</span>
+  <a href="/find-password" className="text-purple-600 hover:underline">비밀번호 찾기</a>
+</div>
             </form>
 
             {/* Divider */}
@@ -168,6 +172,7 @@ export function LoginPage({ onLogin, onSignupClick }: LoginPageProps) {
                 </button>
               </p>
             </div>
+           
           </CardContent>
         </Card>
 
