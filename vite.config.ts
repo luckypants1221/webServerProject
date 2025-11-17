@@ -54,8 +54,20 @@
       target: 'esnext',
       outDir: 'build',
     },
-    server: {
-      port: 3000,
-      open: true,
-    },
+      server: {
+          open: true,
+          proxy: {
+              '/register-process': {
+                  target: 'http://localhost:8080', // Spring Boot 서버 주소
+                  changeOrigin: true, // CORS 문제를 피하기 위해 호스트 헤더를 변경
+              },
+              // '/api'로 시작하는 모든 요청을 http://localhost:8080 으로 보냄
+              '/api': {
+                  target: 'http://localhost:8080',
+                  changeOrigin: true, // CORS 오류를 피하기 위해 Origin 헤더를 변경
+                  // (선택 사항) 백엔드에서 '/api' 경로가 필요 없다면 경로를 재작성
+                  // rewrite: (path) => path.replace(/^\/api/, '')
+              }
+          }
+      }
   });

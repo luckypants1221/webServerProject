@@ -26,7 +26,7 @@ export function SignupPage({ onSignup, onBackToLogin }: SignupPageProps) {
 
   // 이메일 인증번호 발송
   const handleSendCode = async () => {
-    const res = await fetch("/send-email-code", {
+    const res = await fetch("/api/email/send-code", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -41,7 +41,7 @@ export function SignupPage({ onSignup, onBackToLogin }: SignupPageProps) {
 
   // 인증번호 확인
   const handleVerifyCode = async () => {
-    const res = await fetch("/verify-email-code", {
+    const res = await fetch("/api/email/verify-code", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, verificationCode }),
